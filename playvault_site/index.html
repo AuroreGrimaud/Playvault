@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07080d">
+  <title>PlayVault — Fondation de conservation vidéoludique</title>
+  <meta name="description" content="PlayVault — design fiction 2030 autour de la conservation des jeux vidéo.">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="ambient ambient-a"></div>
+<div class="ambient ambient-b"></div>
+
+<section id="intro" class="intro">
+  <div class="intro-grid"></div>
+  <div class="intro-orbit orbit-a"></div>
+  <div class="intro-orbit orbit-b"></div>
+
+  <div class="intro-shell">
+    <div class="intro-status">
+      <span>EUROPE // 2030</span>
+      <i></i>
+      <span>FONDATION À BUT NON LUCRATIF</span>
+    </div>
+
+    <div class="intro-logo-wrap">
+      <div class="logo-aura"></div>
+      <img src="assets/img/playvault-logo.png" class="intro-logo" alt="PlayVault">
+    </div>
+
+    <h1 class="outline-title">THE SERVER DIED.<br><span>THE GAME DIDN'T.</span></h1>
+
+    <p class="intro-copy">
+      Vos mondes ne sont pas jetables. PlayVault conserve les jeux abandonnés, leurs sauvegardes et leur mémoire.
+      Un boîtier citoyen, un système libre et une nouvelle culture de la conservation numérique.
+    </p>
+
+    <div class="intro-details">
+      <span>★ SYSTÈME GRATUIT ET OUVERT</span>
+      <span>★ MATÉRIEL CONÇU POUR ÊTRE RÉPARABLE</span>
+      <span>★ PERSONALISABLE</span>
+    </div>
+
+    <button id="startBtn" class="cta-main landing-cta">
+      <span class="cta-icon">▶</span>
+      <span>ENTRER DANS LE VAULT</span>
+      <i></i>
+    </button>
+
+  </div>
+
+  <div class="scroll-hint">
+    <strong>WASD / ZQSD</strong>
+    <span>POUR SE DÉPLACER</span>
+    <i></i>
+  </div>
+  <div class="landing-keys" aria-hidden="true">
+    <kbd data-landkey="up">W/Z</kbd>
+    <kbd data-landkey="left">A/Q</kbd>
+    <kbd data-landkey="down">S</kbd>
+    <kbd data-landkey="right">D</kbd>
+  </div>
+</section>
+
+<section id="chargement" class="loading hidden">
+  <div class="loading-shell">
+    <img src="assets/img/playvault-logo.png" alt="" class="loading-logo">
+    <div class="loading-kicker">INITIALISATION DU NOYAU DE CONSERVATION</div>
+    <div class="loading-bar"><div id="loadingFill"></div></div>
+    <div class="loading-row">
+      <span id="loadingText">Montage des archives locales…</span>
+      <strong id="loadingPct">0%</strong>
+    </div>
+    <div class="loading-codes">
+      <span>REGISTRE ORPHELIN</span>
+      <span>DROIT D'USUFRUIT</span>
+      <span>RECONSTRUCTION LOCALE</span>
+    </div>
+  </div>
+</section>
+
+<main id="site" class="site hidden">
+  <header class="topbar">
+    <button class="home-logo" data-fast="0" aria-label="Accueil">
+      <img src="assets/img/playvault-logo.png" alt="PlayVault">
+    </button>
+<nav class="desktop-nav">
+      <button data-fast="0">ACCUEIL</button>
+      <button data-fast="1">LOI</button>
+      <button data-fast="2">BOÎTIER</button>
+      <button data-fast="3">PERSONNALISATION</button>
+      <button data-fast="4">FONDATION</button>
+      <button data-fast="5">MANIFESTE</button>
+    </nav>
+
+    <button id="menuBtn" class="menu-btn" aria-label="Menu">☰</button>
+    <div class="node-status"><i></i> NOEUD ACTIF</div>
+  </header>
+
+  <div id="mobileNav" class="mobile-nav">
+    <button data-fast="0">ACCUEIL</button>
+    <button data-fast="1">LOI</button>
+    <button data-fast="2">BOÎTIER</button>
+    <button data-fast="3">PERSONNALISATION</button>
+    <button data-fast="4">FONDATION</button>
+    <button data-fast="5">MANIFESTE</button>
+  </div>
+
+  <aside class="quest-panel">
+    <div class="panel-title">JOURNAL DE QUÊTE</div>
+    <button class="quest active" data-fast="0">
+      <span>01</span><div><b>ENTRER DANS LE VAULT</b><small>ACTIF</small></div><i>→</i>
+    </button>
+    <button class="quest" data-fast="1">
+      <span>02</span><div><b>LIRE LA DIRECTIVE</b><small>VERROUILLÉ</small></div><i>→</i>
+    </button>
+    <button class="quest" data-fast="2">
+      <span>03</span><div><b>INSPECTER LE BOÎTIER</b><small>VERROUILLÉ</small></div><i>→</i>
+    </button>
+    <button class="quest" data-fast="3">
+      <span>04</span><div><b>ACTIVER LA PERSONNALISATION</b><small>VERROUILLÉ</small></div><i>→</i>
+    </button>
+    <button class="quest" data-fast="4">
+      <span>05</span><div><b>DÉCOUVRIR LA FONDATION</b><small>VERROUILLÉ</small></div><i>→</i>
+    </button>
+    <div class="shard-line"><span>FRAGMENTS</span><strong id="shardCount">0 / 6</strong></div>
+  </aside>
+
+  <aside class="controls">
+    <div class="panel-title">DÉPLACEMENT</div>
+    <div class="keys">
+      <span></span><kbd>W/Z</kbd><span></span>
+      <kbd>A/Q</kbd><kbd>S</kbd><kbd>D</kbd>
+    </div>
+    <div class="control-note">UTILISEZ AUSSI LES FLÈCHES DU CLAVIER</div>
+  </aside>
+
+  <div class="movement-reminder">
+    <strong>WASD / ZQSD</strong>
+    <span>POUR SE DÉPLACER</span>
+  </div>
+
+  <div class="zoom-controls">
+    <button id="zoomOut" aria-label="Dézoomer">−</button>
+    <span id="zoomValue">90%</span>
+    <button id="zoomIn" aria-label="Zoomer">+</button>
+    <button id="zoomReset" aria-label="Réinitialiser">↺</button>
+  </div>
+
+  <div class="viewport">
+    <div id="world" class="world">
+      <div class="world-grid"></div>
+
+      <section class="zone hero" style="--x:0px;--y:0px">
+        <div class="zone-label">SECTEUR 00 // ACCUEIL</div>
+
+        <div class="hero-copy">
+          <div class="eyebrow">BOÎTIER CITOYEN DE CONSERVATION // 2030</div>
+          <h2 class="outline-title hero-title">SAUVER LES JEUX,<br><span>SAUVER LE MONDE.</span></h2>
+          <p class="hero-lead">
+            PlayVault redonne une seconde vie aux jeux abandonnés. Un boîtier matériel, un système libre
+            et une logique de conservation locale pour que vos souvenirs ne dépendent plus d'un serveur éteint.
+          </p>
+
+          <div class="manifest-line">
+            <span>MANIFESTE</span>
+            <b>« L'art ne devrait pas avoir de date de péremption. »</b>
+          </div>
+
+          <div class="hero-actions">
+            <button class="cta-main small" data-fast="1">DÉCOUVRIR LA LOI</button>
+            <button class="cta-alt" data-fast="2">VOIR LES SPÉCIFICATIONS</button>
+          </div>
+
+          <div class="reality-note">
+            <b>ORIGINE DU MOUVEMENT :</b> l'initiative citoyenne européenne Stop Killing Games, lancée en 2024 à la suite de la fermeture de serveurs de jeux vidéo
+            rendant certains titres achetés totalement ou partiellement inutilisables.
+          </div>
+        </div>
+
+        <div class="product-zone">
+          <div class="product-ring ring-one"></div>
+          <div class="product-ring ring-two"></div>
+          <div class="product-hud hud-tl">PLAYVAULT // BOITIER </div>
+          <div class="product-hud hud-br">STATUT // PRÊT</div>
+
+          <div class="viewer-shell">
+            <model-viewer id="product3d"
+              src="assets/3d/playvault.glb"
+              poster="assets/img/poster-3d.png"
+              camera-controls
+              auto-rotate
+              rotation-per-second="18deg"
+              shadow-intensity="1.2"
+              exposure="1"
+              interaction-prompt="none"
+              alt="Maquette 3D du boîtier PlayVault">
+            </model-viewer>
+
+            <div id="modelFallback" class="model-fallback">
+              <div class="fallback-icon">◇</div>
+              <strong>EMPLACEMENT MAQUETTE 3D</strong>
+              <p>Déposez votre fichier <b>playvault.glb</b> dans <code>assets/3d/</code>.</p>
+            </div>
+          </div>
+
+          <div class="viewer-note">
+            <span>TOURNEZ / ZOOMEZ / INSPECTEZ</span>
+            <i></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="zone law" style="--x:1520px;--y:-140px">
+        <div class="zone-label">SECTEUR 01 // ARCHIVES LÉGALES</div>
+        <div class="law-intro">
+          <div class="eyebrow">EUROPE // DIRECTIVE 2030</div>
+          <h3 class="outline-title">LE DROIT À<br><span>L'USUFRUIT NUMÉRIQUE.</span></h3>
+          <p>
+            Aussi appelée La Directive Européenne sur les Biens Numériques Orphelins, L’Europe affirme son rôle de pionnière de la régulation technologique :
+            protéger l'accès aux œuvres numériques lorsque les services commerciaux s'arrêtent.
+          </p>
+        </div>
+
+        <div class="law-grid">
+          <article class="interactive-card">
+            <div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"></circle><path d="M24 13v11l7 5"></path></svg>
+    </div>
+            <small>01 / DÉCLARATION</small>
+            <strong>6 MOIS</strong>
+            <p>Sans solution hors-ligne après six mois, un jeu peut être déclaré <b>Bien Numérique Orphelin</b>.</p>
+          </article>
+          <article class="interactive-card">
+            <div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="4"></rect><path d="M18 24h12M24 18v12"></path></svg>
+    </div>
+            <small>02 / PROPRIÉTÉ</small>
+            <strong>LA PI RESTE</strong>
+            <p>L'éditeur conserve sa propriété intellectuelle et ses droits commerciaux.</p>
+          </article>
+          <article class="interactive-card">
+            <div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24c5-8 11-8 16 0s11 8 16 0-11-8-16 0-11 8-16 0Z"></path></svg>
+    </div>
+            <small>03 / DROIT CITOYEN</small>
+            <strong>USUFRUIT</strong>
+            <p>Rétro-ingénierie, modification et hébergement deviennent possibles à des fins non commerciales.</p>
+          </article>
+          <article class="interactive-card">
+            <div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8 40 24 24 40 8 24 24 8Z"></path><path d="M18 24h12"></path></svg>
+    </div>
+            <small>04 / OUTIL</small>
+            <strong>CERTIFIÉ UE</strong>
+            <p>PlayVault devient le premier boîtier certifié pour exercer ce nouveau droit.</p>
+          </article>
+        </div>
+
+        <div class="fact-card">
+          <b>CADRE EUROPÉEN</b>
+          <p>La Directive Européenne sur les Biens Numériques Orphelins inscrit la conservation des jeux dans le droit d’usage des citoyens européens.</p>
+        </div>
+      </section>
+
+      <section class="zone hardware" style="--x:3050px;--y:440px">
+        <div class="zone-label">SECTEUR 02 // DIAGNOSTIC MATÉRIEL</div>
+
+        <div class="hardware-head">
+          <div>
+            <div class="eyebrow">MATÉRIAUX</div>
+            <h3 class="outline-title">UNE MACHINE.<br><span>PAS UN ACCESSOIRE.</span></h3>
+          </div>
+        </div>
+
+        <div class="specs">
+          <button class="spec active" data-spec="0"><span>01</span><b>CARTE MÈRE</b><em>PCB 10 couches</em></button>
+          <button class="spec" data-spec="1"><span>02</span><b>SoC + NPU</b><em>ARM Octa-Core</em></button>
+          <button class="spec" data-spec="2"><span>03</span><b>MÉMOIRE</b><em>16 Go LPDDR5X</em></button>
+          <button class="spec" data-spec="3"><span>04</span><b>STOCKAGE</b><em>256 Go + 2× M.2</em></button>
+          <button class="spec" data-spec="4"><span>05</span><b>RÉSEAU</b><em>Wi-Fi 7 / 2,5 GbE</em></button>
+          <button class="spec" data-spec="5"><span>06</span><b>INTERFACE</b><em>VFD + Air-Gap</em></button>
+          <button class="spec" data-spec="6"><span>07</span><b>REFROIDISSEMENT</b><em>Chambre à vapeur</em></button>
+          <button class="spec" data-spec="7"><span>08</span><b>CHÂSSIS</b><em>Aluminium anodisé</em></button>
+
+          <div class="spec-detail">
+            <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <small id="specType">CARTE MÈRE</small>
+            <h4 id="specTitle">PCB multicouche propriétaire — 15 × 15 cm</h4>
+            <p id="specText">Relie le SoC, la RAM, le stockage, le réseau, l'alimentation et les ports.</p>
+            <div class="metrics">
+              <span>POIDS <b id="specWeight">~150 g</b></span>
+              <span>COÛT ESTIMÉ 2030 <b id="specCost">40 €</b></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="zone features" style="--x:4600px;--y:-200px">
+        <div class="zone-label">SECTEUR 03 // ARBRE DES FONCTIONS</div>
+
+        <div class="feature-title">
+          <div class="eyebrow">PERSONNALISATION COMMUNAUTAIRE</div>
+          <h3 class="outline-title">VOTRE VAULT.<br><span>VOTRE DESIGN.</span></h3>
+          <p>
+            PlayVault a été conçu pour évoluer avec sa communauté.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <button class="feature active" data-feature="0">
+            <div class="feature-icon">◎</div><i>01</i><b>MODULAIRE</b><span>UNE COQUE À VOTRE IMAGE</span>
+          </button>
+          <button class="feature" data-feature="1">
+            <div class="feature-icon">⚡</div><i>02</i><b>IMPRIMABLE</b><span>DES FICHIERS 3D ACCESSIBLES</span>
+          </button>
+          <button class="feature" data-feature="2">
+            <div class="feature-icon">⌁</div><i>03</i><b>COMMUNAUTAIRE</b><span>CRÉÉ PAR LES JOUEURS</span>
+          </button>
+          <button class="feature" data-feature="3">
+            <div class="feature-icon">↯</div><i>04</i><b>ÉVOLUTIF</b><span>UN VAULT QUI NE VOUS RESSEMBLE QU’À VOUS</span>
+          </button>
+        </div>
+
+        <div class="feature-console">
+          <div class="console-top"><span id="featureCode">PROTOCOLE // 01</span><b id="featureStatus">● ARMÉ</b></div>
+          <h4 id="featureTitle">MODULAIRE</h4>
+          <p id="featureText">Le boîtier PlayVault a été conçu dès l’origine pour accueillir des pièces personnalisées et facilement interchangeables.</p>
+
+          <div class="signal-visual">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <button id="toggleFeature" class="cta-main small">VOIR LES CRÉATIONS</button>
+        </div>
+      </section>
+
+      <section class="zone foundation" style="--x:6150px;--y:360px">
+        <div class="zone-label">SECTEUR 04 // FONDATION</div>
+
+        <div class="foundation-main">
+          <div class="eyebrow">À BUT NON LUCRATIF // SYSTÈME LIBRE</div>
+          <h3 class="outline-title">PAS DES PIRATES.<br><span>DES CONSERVATEURS.</span></h3>
+          <p>
+            PlayVault fonctionne comme une fondation ou coopérative technologique :
+            une structure pensée pour défendre les droits civiques numériques et conserver le patrimoine vidéoludique.
+          </p>
+
+          <div class="foundation-grid">
+            <article><div class="card-icon">♟</div><small>POSITION</small><strong>PAR LES JOUEURS</strong><p>Une organisation citoyenne structurée, crédible et publique.</p></article>
+            <article><div class="card-icon">€</div><small>MATÉRIEL</small><strong>450 €</strong><p>La vente finance la R&D, les infrastructures et les frais juridiques.</p></article>
+            <article><div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="4"></rect><path d="M18 24h12M24 18v12"></path></svg>
+    </div><small>SYSTÈME</small><strong>LIBRE</strong><p>Le système de la box est gratuit et open-source.</p></article>
+            <article><div class="card-icon">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 24c5-8 11-8 16 0s11 8 16 0-11-8-16 0-11 8-16 0Z"></path></svg>
+    </div><small>MISSION</small><strong>CONSERVER</strong><p>Sauvegarder et relancer le patrimoine vidéoludique perdu.</p></article>
+          </div>
+        </div>
+
+        <div class="position-card">
+          <small>IMAGE PUBLIQUE</small>
+          <h4>RESPECTÉ PAR LA CULTURE.<br>DÉTESTÉ PAR L'OBSOLESCENCE.</h4>
+          <p>
+            Aux côtés des communautés et des acteurs de la culture, la Fondation œuvre pour que les jeux 
+            restent accessibles au-delà de leur exploitation commerciale.
+          </p>
+        </div>
+      </section>
+
+      <section class="zone manifesto" style="--x:7700px;--y:-120px">
+        <div class="zone-label">SECTEUR 05 // MANIFESTE & ACQUISITION</div>
+
+        <div class="manifesto-card">
+          <img src="assets/img/playvault-logo.png" alt="">
+          <small>MANIFESTE PLAYVAULT</small>
+          <blockquote>
+            L'art ne devrait pas avoir de date de péremption. Pendant des années, l'industrie a décidé
+            que vos mondes, vos personnages et vos souvenirs n'étaient que des lignes comptables.
+            S'ils n'étaient plus rentables, ils devaient disparaître.
+            <strong>Ils ont tué les jeux. Nous avons construit la machine pour les ressusciter.</strong>
+            Nous ne sommes pas des pirates, nous sommes des conservateurs.
+            PlayVault redonne vie aux mondes orphelins : pour les fans, par la technologie, et pour l'éternité.
+          </blockquote>
+          <div class="manifest-final">CE QUE VOUS AVEZ ACHETÉ, <b>VOUS LE POSSÉDEZ. POUR TOUJOURS.</b></div>
+        </div>
+
+        <div class="shop">
+          <small>MATÉRIEL DE LA FONDATION</small>
+          <h3 class="outline-title">PLAYVAULT<br></h3>
+          <div class="price"><span>€</span><strong>450</strong></div>
+          <p>Box PlayVault + système libre + outils locaux de restauration et de simulation.</p>
+          <button class="cta-main">ACHETER UN BOITIER</button>
+          <div class="tags"><span>RÉPARABLE</span><span>SYSTÈME LIBRE</span><span>PERSONALISABLE</span></div>
+        </div>
+      </section>
+
+      <button class="shard" style="--sx:1020px;--sy:520px">◆</button>
+      <button class="shard" style="--sx:2200px;--sy:-20px">◆</button>
+      <button class="shard" style="--sx:3700px;--sy:790px">◆</button>
+      <button class="shard" style="--sx:5200px;--sy:0px">◆</button>
+      <button class="shard" style="--sx:6700px;--sy:760px">◆</button>
+      <button class="shard" style="--sx:8250px;--sy:220px">◆</button>
+
+    </div>
+  </div>
+
+  <div class="minimap">
+    <div class="map-title">CARTE DU RÉSEAU</div>
+    <div class="map-track">
+      <button data-fast="0">00</button><i></i>
+      <button data-fast="1">01</button><i></i>
+      <button data-fast="2">02</button><i></i>
+      <button data-fast="3">03</button><i></i>
+      <button data-fast="4">04</button><i></i>
+      <button data-fast="5">05</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">FRAGMENT D'ARCHIVE RÉCUPÉRÉ</div>
+  <div class="reticle"></div>
+  <footer>PLAYVAULT // FONDATION EUROPÉENNE DE CONSERVATION VIDÉOLUDIQUE // 2030</footer>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
