@@ -1,0 +1,11 @@
+Déposez ici votre modèle 3D au format GLB et nommez-le :
+
+playvault.glb
+
+Le site le chargera automatiquement dans la zone 3D de l'accueil.
+
+Important :
+- Pour tester le GLB localement, lancez le dossier avec un petit serveur local
+  (par exemple l'extension Live Server de VS Code).
+- Si vous ouvrez simplement index.html en file://, certains navigateurs bloquent
+  le chargement du modèle 3D.
